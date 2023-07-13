@@ -161,7 +161,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 Container(
                   margin: const EdgeInsets.only(top: 30.0),
                   padding: const EdgeInsets.all(20.0),
-                  width: 250,
+                  width: 300,
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20)),

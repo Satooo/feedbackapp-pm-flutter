@@ -96,7 +96,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: Container(
                   margin: const EdgeInsets.only(top: 50.0),
                   padding: const EdgeInsets.all(20.0),
-                  width: 250,
+                  width: 300,
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20)),
