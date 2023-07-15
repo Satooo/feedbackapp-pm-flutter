@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -13,6 +15,16 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController _passController = TextEditingController();
   FocusNode myfocus1 = FocusNode();
   FocusNode myfocus2 = FocusNode();
+
+  Future<void> fireFun(user, pass) async {
+    var firebase = await Firebase.initializeApp();
+    var rtdb = FirebaseDatabase.instanceFor(
+        app: firebase,
+        databaseURL: 'https://feedbackapp-a93bf-default-rtdb.firebaseio.com/');
+
+    DatabaseReference ref = rtdb.ref("users/${user}");
+    await ref.set({"user": user, "pass": pass});
+  }
 
   void _incrementCounter() {
     setState(() {
@@ -137,6 +149,7 @@ class _LoginPageState extends State<LoginPage> {
                         shape: StadiumBorder()),
                     onPressed: () {
                       Navigator.pushNamed(context, "/activities");
+                      fireFun(_userController.text, _passController.text);
                     },
                     child: const Text("Ingresar"))),
             Padding(padding: EdgeInsets.all(20.0)),

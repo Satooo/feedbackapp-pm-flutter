@@ -4,6 +4,8 @@ import 'package:feedbackapp/views/profile_view.dart';
 import 'package:feedbackapp/views/rating_view.dart';
 import 'package:feedbackapp/views/register_view.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 void main() => runApp(MaterialApp(
       initialRoute: '/',
