@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class ActivitiesPage extends StatefulWidget {
@@ -119,6 +121,7 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
                               foregroundColor: Colors.white,
                               shape: StadiumBorder()),
                           onPressed: () {
+                            FirebaseAuth.instance.signOut();
                             Navigator.pushNamed(context, "/");
                           },
                           child: const Text("Out"))),
