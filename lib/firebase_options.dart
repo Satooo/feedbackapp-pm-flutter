@@ -44,33 +44,32 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAd7c-Cu2SS3Hci6qGIfFl8qydbP61BOpY',
-    appId: '1:956646036975:web:2a1c0d948cea5a9c1c921a',
-    messagingSenderId: '956646036975',
-    projectId: 'alertaperuapp-403c9',
-    authDomain: 'alertaperuapp-403c9.firebaseapp.com',
-    databaseURL: 'https://alertaperuapp-403c9-default-rtdb.firebaseio.com',
-    storageBucket: 'alertaperuapp-403c9.appspot.com',
-    measurementId: 'G-4NNFHGK28F',
-  );
+      apiKey: "AIzaSyDNnQoqR-7Re0ELSuvSbr6-Ood1LrPbIIc",
+      authDomain: "feedbackapp-96832.firebaseapp.com",
+      projectId: "feedbackapp-96832",
+      storageBucket: "feedbackapp-96832.appspot.com",
+      messagingSenderId: "733388694064",
+      appId: "1:733388694064:web:8b2f92818cbb5c200003f5",
+      measurementId: "G-R6LRSP48ZY");
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCKWgpOrGklRRZykLQFQ5tGQ-HomfnF3ro',
-    appId: '1:956646036975:android:dbf74326f6136d9f1c921a',
-    messagingSenderId: '956646036975',
-    projectId: 'alertaperuapp-403c9',
-    databaseURL: 'https://alertaperuapp-403c9-default-rtdb.firebaseio.com',
-    storageBucket: 'alertaperuapp-403c9.appspot.com',
+    apiKey: 'AIzaSyCcJxrc5ASUb3vvl9-DIRIifMogo1G39Bw',
+    appId: '1:733388694064:android:1b42268c22ea4e240003f5',
+    messagingSenderId: '733388694064',
+    projectId: 'feedbackapp-96832',
+    databaseURL: 'https://feedbackapp-96832-default-rtdb.firebaseio.com/',
+    storageBucket: 'gs://feedbackapp-96832.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyA-SiTG4MLpxrEeANCZeHj-Tw-78PhvYvE',
-    appId: '1:956646036975:ios:0132a7021dbc33b11c921a',
+    apiKey: 'AIzaSyCcJxrc5ASUb3vvl9-DIRIifMogo1G39Bw',
+    appId: '1:733388694064:android:1b42268c22ea4e240003f5',
     messagingSenderId: '956646036975',
-    projectId: 'alertaperuapp-403c9',
-    databaseURL: 'https://alertaperuapp-403c9-default-rtdb.firebaseio.com',
-    storageBucket: 'alertaperuapp-403c9.appspot.com',
-    iosClientId: '956646036975-bclgg3apaqa01spn1r9eqbqouod1mn3h.apps.googleusercontent.com',
+    projectId: 'feedbackapp-96832',
+    databaseURL: 'https://feedbackapp-96832-default-rtdb.firebaseio.com/',
+    storageBucket: 'gs://feedbackapp-96832.appspot.com',
+    iosClientId:
+        '956646036975-bclgg3apaqa01spn1r9eqbqouod1mn3h.apps.googleusercontent.com',
     iosBundleId: 'com.example.feedbackapp',
   );
 
@@ -81,7 +80,8 @@ class DefaultFirebaseOptions {
     projectId: 'alertaperuapp-403c9',
     databaseURL: 'https://alertaperuapp-403c9-default-rtdb.firebaseio.com',
     storageBucket: 'alertaperuapp-403c9.appspot.com',
-    iosClientId: '956646036975-7gm2205k621iiqet1uk7o717vulhr262.apps.googleusercontent.com',
+    iosClientId:
+        '956646036975-7gm2205k621iiqet1uk7o717vulhr262.apps.googleusercontent.com',
     iosBundleId: 'com.example.feedbackapp.RunnerTests',
   );
 }
