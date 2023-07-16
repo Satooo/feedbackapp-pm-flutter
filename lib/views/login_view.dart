@@ -113,7 +113,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     TextField(
                       focusNode: myfocus1,
-                      style: const TextStyle(fontSize: 10),
+                      style: const TextStyle(fontSize: 12),
                       controller: _userController,
                       decoration: InputDecoration(
                           hintText: '',
@@ -128,7 +128,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     TextField(
                       focusNode: myfocus2,
-                      style: const TextStyle(fontSize: 10),
+                      style: const TextStyle(fontSize: 12),
                       controller: _passController,
                       decoration: InputDecoration(
                           hintText: '',
@@ -152,7 +152,7 @@ class _LoginPageState extends State<LoginPage> {
                       fireFun(_userController.text, _passController.text);
                     },
                     child: const Text("Ingresar"))),
-            Padding(padding: EdgeInsets.all(20.0)),
+            Padding(padding: EdgeInsets.all(10.0)),
             Container(
                 width: 250,
                 child: TextButton(
