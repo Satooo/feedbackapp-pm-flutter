@@ -18,7 +18,7 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
 
   handleSubmit() async {
-    if(!_formKey.currentState!.validate()) return;
+    if (!_formKey.currentState!.validate()) return;
 
     final usuario = _userController.text;
     final pass = _passController.text;
@@ -39,7 +39,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    Firebase.initializeApp().whenComplete(() { 
+    Firebase.initializeApp().whenComplete(() {
       print("completed");
       setState(() {});
     });
@@ -88,48 +88,14 @@ class _LoginPageState extends State<LoginPage> {
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20)),
-<<<<<<< HEAD
-                  child: Column(children: [
-                    const Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: <Widget>[Text("Usuario")],
-                    ),
-                    TextField(
-                      focusNode: myfocus1,
-                      style: const TextStyle(fontSize: 12),
-                      controller: _userController,
-                      decoration: InputDecoration(
-                          hintText: '',
-                          labelText: '',
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20.0))),
-                    ),
-                    const Padding(padding: EdgeInsets.all(5.0)),
-                    const Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: <Widget>[Text("Contraseña")],
-                    ),
-                    TextField(
-                      focusNode: myfocus2,
-                      style: const TextStyle(fontSize: 12),
-                      controller: _passController,
-                      decoration: InputDecoration(
-                          hintText: '',
-                          labelText: '',
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20.0))),
-                    )
-                  ]),
-=======
                   child: Form(
                     key: _formKey,
-                    child: Column(
-                      children: [
-                        const Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: <Widget>[Text("Usuario")],
-                        ),
-                        TextFormField(
+                    child: Column(children: [
+                      const Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: <Widget>[Text("Usuario")],
+                      ),
+                      TextFormField(
                           focusNode: myfocus1,
                           style: const TextStyle(fontSize: 10),
                           controller: _userController,
@@ -137,26 +103,25 @@ class _LoginPageState extends State<LoginPage> {
                               hintText: '',
                               labelText: '',
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.0))),
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Ingresa un correo';
-                                }
+                                  borderRadius: BorderRadius.circular(20.0))),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Ingresa un correo';
+                            }
 
-                                String emailRegex =
-                                    r'^[\w-]+(\.[\w-]+)*@([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,7}$';
-                                if (!RegExp(emailRegex).hasMatch(value)) {
-                                  return 'Ingresa un correo válido';
-                                }
-                                return null;
-                              }
-                        ),
-                        const Padding(padding: EdgeInsets.all(5.0)),
-                        const Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: <Widget>[Text("Contraseña")],
-                        ),
-                        TextFormField(
+                            String emailRegex =
+                                r'^[\w-]+(\.[\w-]+)*@([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,7}$';
+                            if (!RegExp(emailRegex).hasMatch(value)) {
+                              return 'Ingresa un correo válido';
+                            }
+                            return null;
+                          }),
+                      const Padding(padding: EdgeInsets.all(5.0)),
+                      const Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: <Widget>[Text("Contraseña")],
+                      ),
+                      TextFormField(
                           focusNode: myfocus2,
                           style: const TextStyle(fontSize: 10),
                           controller: _passController,
@@ -165,17 +130,15 @@ class _LoginPageState extends State<LoginPage> {
                               hintText: '',
                               labelText: '',
                               border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.0))),
+                                  borderRadius: BorderRadius.circular(20.0))),
                           validator: (value) {
-                            if(value==null || value.isEmpty) {
+                            if (value == null || value.isEmpty) {
                               return 'Coloca una contraseña';
                             }
                             return null;
-                          }
-                        )
-                      ]),
+                          })
+                    ]),
                   ),
->>>>>>> 0f40ebd0d99c90daffe22f73c5ea219c7f459fb6
                 )),
             const Padding(padding: EdgeInsets.all(10.0)),
             Container(
