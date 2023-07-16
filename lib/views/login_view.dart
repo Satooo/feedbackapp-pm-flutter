@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:feedbackapp/firebase/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -10,71 +11,52 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  int _counter = 0;
-  TextEditingController _userController = TextEditingController();
-  TextEditingController _passController = TextEditingController();
+  final TextEditingController _userController = TextEditingController();
+  final TextEditingController _passController = TextEditingController();
   FocusNode myfocus1 = FocusNode();
   FocusNode myfocus2 = FocusNode();
+  final _formKey = GlobalKey<FormState>();
 
-  Future<void> fireFun(user, pass) async {
-    var firebase = await Firebase.initializeApp();
-    var rtdb = FirebaseDatabase.instanceFor(
-        app: firebase,
-        databaseURL: 'https://feedbackapp-a93bf-default-rtdb.firebaseio.com/');
+  handleSubmit() async {
+    if(!_formKey.currentState!.validate()) return;
 
-    DatabaseReference ref = rtdb.ref("users/${user}");
-    await ref.set({"user": user, "pass": pass});
+    final usuario = _userController.text;
+    final pass = _passController.text;
+
+    await Auth().logearUsuario(usuario, pass);
   }
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
+  // Future<void> fireFun(user, pass) async {
+  //   var firebase = await Firebase.initializeApp();
+  //   var rtdb = FirebaseDatabase.instanceFor(
+  //       app: firebase,
+  //       databaseURL: 'https://feedbackapp-a93bf-default-rtdb.firebaseio.com/');
+
+  //   DatabaseReference ref = rtdb.ref("users/${user}");
+  //   await ref.set({"user": user, "pass": pass});
+  // }
+
+  @override
+  void initState() {
+    super.initState();
+    Firebase.initializeApp().whenComplete(() { 
+      print("completed");
+      setState(() {});
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
         backgroundColor: const Color(0xff3949ab),
         toolbarHeight: 0,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
       ),
       body: Center(
-          // Center is a layout widget. It takes a single child and positions it
-          // in the middle of the parent.
           child: Container(
         constraints: const BoxConstraints.expand(),
         color: const Color(0xffe8eaf6),
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
@@ -106,6 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(20)),
+<<<<<<< HEAD
                   child: Column(children: [
                     const Row(
                       mainAxisSize: MainAxisSize.max,
@@ -137,22 +120,78 @@ class _LoginPageState extends State<LoginPage> {
                               borderRadius: BorderRadius.circular(20.0))),
                     )
                   ]),
+=======
+                  child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        const Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: <Widget>[Text("Usuario")],
+                        ),
+                        TextFormField(
+                          focusNode: myfocus1,
+                          style: const TextStyle(fontSize: 10),
+                          controller: _userController,
+                          decoration: InputDecoration(
+                              hintText: '',
+                              labelText: '',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20.0))),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Ingresa un correo';
+                                }
+
+                                String emailRegex =
+                                    r'^[\w-]+(\.[\w-]+)*@([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,7}$';
+                                if (!RegExp(emailRegex).hasMatch(value)) {
+                                  return 'Ingresa un correo válido';
+                                }
+                                return null;
+                              }
+                        ),
+                        const Padding(padding: EdgeInsets.all(5.0)),
+                        const Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: <Widget>[Text("Contraseña")],
+                        ),
+                        TextFormField(
+                          focusNode: myfocus2,
+                          style: const TextStyle(fontSize: 10),
+                          controller: _passController,
+                          obscureText: true,
+                          decoration: InputDecoration(
+                              hintText: '',
+                              labelText: '',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20.0))),
+                          validator: (value) {
+                            if(value==null || value.isEmpty) {
+                              return 'Coloca una contraseña';
+                            }
+                            return null;
+                          }
+                        )
+                      ]),
+                  ),
+>>>>>>> 0f40ebd0d99c90daffe22f73c5ea219c7f459fb6
                 )),
             const Padding(padding: EdgeInsets.all(10.0)),
             Container(
                 width: 250,
                 child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.all(15.0),
+                        padding: const EdgeInsets.all(15.0),
                         backgroundColor: Color(0xff3f51b5),
                         foregroundColor: Colors.white,
-                        shape: StadiumBorder()),
+                        shape: const StadiumBorder()),
                     onPressed: () {
-                      Navigator.pushNamed(context, "/activities");
-                      fireFun(_userController.text, _passController.text);
+                      handleSubmit();
+                      // logearUsuario(_userController.text, _passController.text);
                     },
                     child: const Text("Ingresar"))),
-            Padding(padding: EdgeInsets.all(10.0)),
+            Padding(padding: EdgeInsets.all(20.0)),
             Container(
                 width: 250,
                 child: TextButton(
