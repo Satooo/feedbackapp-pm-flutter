@@ -97,7 +97,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       TextFormField(
                           focusNode: myfocus1,
-                          style: const TextStyle(fontSize: 10),
+                          style: const TextStyle(fontSize: 14),
                           controller: _userController,
                           decoration: InputDecoration(
                               hintText: '',
@@ -123,7 +123,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       TextFormField(
                           focusNode: myfocus2,
-                          style: const TextStyle(fontSize: 10),
+                          style: const TextStyle(fontSize: 14),
                           controller: _passController,
                           obscureText: true,
                           decoration: InputDecoration(

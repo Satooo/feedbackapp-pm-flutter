@@ -56,7 +56,10 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
                             foregroundColor: Colors.white,
                             shape: StadiumBorder()),
                         onPressed: () {
-                          Navigator.pushNamed(context, "/rating");
+                          Navigator.pushNamed(context, "/rating", arguments: {
+                            "id": activityId,
+                            "name": activityName
+                          });
                         },
                         child: const Text("Calificar")))
               ],

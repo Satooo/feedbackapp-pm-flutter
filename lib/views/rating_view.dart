@@ -1,6 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:developer';
 
 class RatingPage extends StatefulWidget {
   @override
@@ -9,10 +12,54 @@ class RatingPage extends StatefulWidget {
 
 class _RatingPageState extends State<RatingPage> {
   int _counter = 0;
-  TextEditingController _userController = TextEditingController();
+  TextEditingController _comment = TextEditingController();
   TextEditingController _passController = TextEditingController();
   FocusNode myfocus1 = FocusNode();
   FocusNode myfocus2 = FocusNode();
+
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  var updated = false;
+
+  var preguntas = [];
+
+  var puntaje = [-1, -1, -1];
+
+  Future<void> obtenerPreguntas() async {
+    try {
+      final doc = await FirebaseFirestore.instance
+          .collection('preguntas')
+          .doc("WHhBNB0RkCi47NrgRGIv")
+          .get();
+      final array = doc.data()!['lista'];
+      preguntas = array;
+      if (updated == false) {
+        setState(() {});
+      }
+      updated = true;
+    } catch (e) {
+      debugPrint("Error obteniendo preguntas");
+    }
+  }
+
+  Future<void> ingresarCalificacion(proceso) async {
+    try {
+      var uuid = UniqueKey().hashCode.toInt();
+      await _firestore
+          .collection('calificacion')
+          .doc(uuid.toString() + proceso)
+          .set({
+        'proceso': proceso,
+        'usuario': FirebaseAuth.instance.currentUser!.uid,
+        'rapidez': puntaje[0],
+        'efectividad': puntaje[1],
+        'amabilidad': puntaje[2],
+        'comentario': _comment.text
+      });
+      Navigator.pushNamed(context, "/");
+    } catch (e) {
+      print("Error ingresando");
+    }
+  }
 
   void _incrementCounter() {
     setState(() {
@@ -21,13 +68,16 @@ class _RatingPageState extends State<RatingPage> {
       // so that the display can reflect the updated values. If we changed
       // _counter without calling setState(), then the build method would not be
       // called again, and so nothing would appear to happen.
-      _counter++;
+      if (_counter < 3) {
+        _counter++;
+      }
     });
   }
 
   void _decrementCounter() {
     setState(() {
       _counter--;
+      puntaje[_counter] = -1;
     });
   }
 
@@ -45,7 +95,7 @@ class _RatingPageState extends State<RatingPage> {
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             Padding(padding: EdgeInsets.only(top: 10.0)),
             Text(
-              "Qué tan rapida fue la atención?",
+              preguntas.length > 0 ? preguntas[_counter] : "",
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
             ),
             Padding(padding: EdgeInsets.only(top: 10.0)),
@@ -61,9 +111,11 @@ class _RatingPageState extends State<RatingPage> {
                             padding: EdgeInsets.all(15.0),
                             backgroundColor: Color(0xffe53935),
                             foregroundColor: Colors.white,
+                            elevation: (puntaje[_counter] > 0) ? 20 : 0,
                             shape: StadiumBorder()),
                         onPressed: () {
-                          Navigator.pushNamed(context, "/");
+                          puntaje[_counter] = 1;
+                          _incrementCounter();
                         },
                         child: const Text(""))),
                 Spacer(),
@@ -75,9 +127,11 @@ class _RatingPageState extends State<RatingPage> {
                             padding: EdgeInsets.all(15.0),
                             backgroundColor: Color(0xfffb8c00),
                             foregroundColor: Colors.white,
+                            elevation: (puntaje[_counter] > 0) ? 20 : 0,
                             shape: StadiumBorder()),
                         onPressed: () {
-                          Navigator.pushNamed(context, "/");
+                          puntaje[_counter] = 2;
+                          _incrementCounter();
                         },
                         child: const Text(""))),
                 Spacer(),
@@ -89,9 +143,11 @@ class _RatingPageState extends State<RatingPage> {
                             padding: EdgeInsets.all(15.0),
                             backgroundColor: Color(0xffffd54f),
                             foregroundColor: Colors.white,
+                            elevation: (puntaje[_counter] > 0) ? 20 : 0,
                             shape: StadiumBorder()),
                         onPressed: () {
-                          Navigator.pushNamed(context, "/");
+                          puntaje[_counter] = 3;
+                          _incrementCounter();
                         },
                         child: const Text(""))),
                 Spacer(),
@@ -103,9 +159,11 @@ class _RatingPageState extends State<RatingPage> {
                             padding: EdgeInsets.all(15.0),
                             backgroundColor: Color(0xff9ccc65),
                             foregroundColor: Colors.white,
+                            elevation: (puntaje[_counter] > 0) ? 20 : 0,
                             shape: StadiumBorder()),
                         onPressed: () {
-                          Navigator.pushNamed(context, "/");
+                          puntaje[_counter] = 4;
+                          _incrementCounter();
                         },
                         child: const Text(""))),
                 Spacer(),
@@ -117,9 +175,11 @@ class _RatingPageState extends State<RatingPage> {
                             padding: EdgeInsets.all(15.0),
                             backgroundColor: Color(0xff43a047),
                             foregroundColor: Colors.white,
+                            elevation: (_counter == 5) ? 20 : 0,
                             shape: StadiumBorder()),
                         onPressed: () {
-                          Navigator.pushNamed(context, "/");
+                          puntaje[_counter] = 5;
+                          _incrementCounter();
                         },
                         child: const Text("")))
               ],
@@ -154,7 +214,7 @@ class _RatingPageState extends State<RatingPage> {
               maxLines: null,
               focusNode: myfocus1,
               style: const TextStyle(fontSize: 12),
-              controller: _userController,
+              controller: _comment,
               decoration: InputDecoration(
                   hintText: '',
                   labelText: '',
@@ -168,8 +228,8 @@ class _RatingPageState extends State<RatingPage> {
   }
 
   cardSwitcher() {
-    if (_counter == 0) {
-      return activityCard("Proceso de solicitud", "0");
+    if (_counter >= 0 && _counter < 3) {
+      return activityCard("", "0");
     } else {
       return commentCard();
     }
@@ -177,12 +237,15 @@ class _RatingPageState extends State<RatingPage> {
 
   @override
   Widget build(BuildContext context) {
+    var arg = ModalRoute.of(context)!.settings.arguments as Map;
+    obtenerPreguntas();
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
+
     return Scaffold(
       appBar: AppBar(
         // TRY THIS: Try changing the color here to a specific color (to
@@ -253,11 +316,11 @@ class _RatingPageState extends State<RatingPage> {
                 Container(
                   alignment: Alignment.topLeft,
                   width: 350,
-                  child: const Expanded(
+                  child: Expanded(
                       child: Column(children: [
                     Padding(padding: EdgeInsets.only(top: 20.0)),
                     Text(
-                      "Proceso de solicitud",
+                      arg['name'],
                       style: TextStyle(
                           fontWeight: FontWeight.bold, fontSize: 25.0),
                     ),
@@ -296,7 +359,11 @@ class _RatingPageState extends State<RatingPage> {
                                   shape: StadiumBorder()),
                               onPressed: () {
                                 //Navigator.pushNamed(context, "/");
-                                _incrementCounter();
+                                if (_counter == 3) {
+                                  ingresarCalificacion(arg['name']);
+                                } else {
+                                  _incrementCounter();
+                                }
                               },
                               child: const Text("Continuar")))
                     ],

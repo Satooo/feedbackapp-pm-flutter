@@ -7,7 +7,6 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-
   final TextEditingController _userController = TextEditingController();
   final TextEditingController _nombreController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
@@ -19,16 +18,18 @@ class _RegisterPageState extends State<RegisterPage> {
 
   final _formKey = GlobalKey<FormState>();
 
-    handleSubmit() async {
-      if(!_formKey.currentState!.validate()) return;
+  handleSubmit() async {
+    if (!_formKey.currentState!.validate()) return;
 
-      final usuario = _userController.text;
-      final pass = _passController.text;
-      final nombres = _nombreController.text;
-      final apellidos = _apellidosController.text;
+    final usuario = _userController.text;
+    final pass = _passController.text;
+    final nombres = _nombreController.text;
+    final apellidos = _apellidosController.text;
 
-      await Auth().registrarUsuario(usuario, pass, nombres, apellidos).then((_) => Navigator.pushNamed(context, "/"));
-    }
+    await Auth()
+        .registrarUsuario(usuario, pass, nombres, apellidos)
+        .then((_) => Navigator.pushNamed(context, "/"));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +71,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   myfocus4.unfocus();
                 },
                 child: Container(
-                  margin: const EdgeInsets.only(top: 50.0),
+                  margin: const EdgeInsets.only(top: 20.0),
                   padding: const EdgeInsets.all(20.0),
                   width: 300,
                   decoration: BoxDecoration(
@@ -84,92 +85,88 @@ class _RegisterPageState extends State<RegisterPage> {
                         children: <Widget>[Text("Usuario")],
                       ),
                       TextFormField(
-                        focusNode: myfocus1,
-                        style: const TextStyle(fontSize: 10),
-                        controller: _userController,
-                        decoration: InputDecoration(
-                            hintText: '',
-                            labelText: '',
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.0))),
-                            validator: (value) {
-                                  if (value == null || value.isEmpty) {
-                                    return 'Ingresa un correo';
-                                  }
-                  
-                                  String emailRegex =
-                                      r'^[\w-]+(\.[\w-]+)*@([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,7}$';
-                                  if (!RegExp(emailRegex).hasMatch(value)) {
-                                    return 'Ingresa un correo válido';
-                                  }
-                                  return null;
-                                }
-                      ),
+                          focusNode: myfocus1,
+                          style: const TextStyle(fontSize: 14),
+                          controller: _userController,
+                          decoration: InputDecoration(
+                              hintText: '',
+                              labelText: '',
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20.0))),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Ingresa un correo';
+                            }
+
+                            String emailRegex =
+                                r'^[\w-]+(\.[\w-]+)*@([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,7}$';
+                            if (!RegExp(emailRegex).hasMatch(value)) {
+                              return 'Ingresa un correo válido';
+                            }
+                            return null;
+                          }),
                       const Padding(padding: EdgeInsets.all(5.0)),
                       const Row(
                         mainAxisSize: MainAxisSize.max,
                         children: <Widget>[Text("Contraseña")],
                       ),
                       TextFormField(
-                        focusNode: myfocus2,
-                        style: const TextStyle(fontSize: 10),
-                        controller: _passController,
-                        decoration: InputDecoration(
-                            hintText: '',
-                            labelText: '',
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.0))),
-                            validator: (value) {
-                              if(value==null || value.isEmpty) {
-                                return 'Coloca una contraseña';
-                              } else if (value.length < 6) {
-                                return 'Debe tener al menos 6 caracteres';
-                              }
-                              return null;
+                          focusNode: myfocus2,
+                          style: const TextStyle(fontSize: 14),
+                          controller: _passController,
+                          decoration: InputDecoration(
+                              hintText: '',
+                              labelText: '',
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20.0))),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Coloca una contraseña';
+                            } else if (value.length < 6) {
+                              return 'Debe tener al menos 6 caracteres';
                             }
-                      ),
+                            return null;
+                          }),
                       const Padding(padding: EdgeInsets.all(5.0)),
                       const Row(
                         mainAxisSize: MainAxisSize.max,
                         children: <Widget>[Text("Nombre")],
                       ),
                       TextFormField(
-                        focusNode: myfocus3,
-                        style: const TextStyle(fontSize: 10),
-                        controller: _nombreController,
-                        decoration: InputDecoration(
-                            hintText: '',
-                            labelText: '',
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.0))),
-                            validator: (value) {
-                              if(value==null || value.isEmpty) {
-                                return 'Llena este campo.';
-                              }
-                              return null;
+                          focusNode: myfocus3,
+                          style: const TextStyle(fontSize: 14),
+                          controller: _nombreController,
+                          decoration: InputDecoration(
+                              hintText: '',
+                              labelText: '',
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20.0))),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Llena este campo.';
                             }
-                      ),
+                            return null;
+                          }),
                       const Padding(padding: EdgeInsets.all(5.0)),
                       const Row(
                         mainAxisSize: MainAxisSize.max,
                         children: <Widget>[Text("Apellidos")],
                       ),
                       TextFormField(
-                        focusNode: myfocus4,
-                        style: const TextStyle(fontSize: 10),
-                        controller: _apellidosController,
-                        decoration: InputDecoration(
-                            hintText: '',
-                            labelText: '',
-                            border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(20.0))),
-                            validator: (value) {
-                              if(value==null || value.isEmpty) {
-                                return 'Llena este campo.';
-                              }
-                              return null;
+                          focusNode: myfocus4,
+                          style: const TextStyle(fontSize: 14),
+                          controller: _apellidosController,
+                          decoration: InputDecoration(
+                              hintText: '',
+                              labelText: '',
+                              border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20.0))),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Llena este campo.';
                             }
-                      )
+                            return null;
+                          })
                     ]),
                   ),
                 )),
@@ -184,7 +181,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         shape: StadiumBorder()),
                     onPressed: () => handleSubmit(),
                     child: const Text("Registrar"))),
-            const Padding(padding: EdgeInsets.all(20.0)),
+            const Padding(padding: EdgeInsets.all(5.0)),
             Container(
                 width: 250,
                 child: ElevatedButton(

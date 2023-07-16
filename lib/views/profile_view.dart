@@ -1,6 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:feedbackapp/firebase/auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -16,6 +19,38 @@ class _ProfilePageState extends State<ProfilePage> {
   FocusNode myfocus2 = FocusNode();
   FocusNode myfocus3 = FocusNode();
   FocusNode myfocus4 = FocusNode();
+
+  var nombre = "";
+  var apellido = "";
+  var contrasena = "";
+  var password = "";
+
+  var updated = false;
+
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  Future<void> obtenerPreguntas() async {
+    try {
+      final doc = await FirebaseFirestore.instance
+          .collection('usuarios')
+          .doc(FirebaseAuth.instance.currentUser!.uid.toString())
+          .get();
+      nombre = doc.data()!['nombre'];
+      apellido = doc.data()!['apellido'];
+      password = doc.data()!['password'];
+      debugPrint(nombre);
+      if (updated == false) {
+        setState(() {
+          _nombreController.text = nombre;
+          _apellidosController.text = apellido;
+          _passController.text = password;
+        });
+      }
+      updated = true;
+    } catch (e) {
+      debugPrint("Error obteniendo datos");
+    }
+  }
 
   void _incrementCounter() {
     setState(() {
@@ -70,6 +105,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    obtenerPreguntas();
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -130,7 +166,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               onPressed: () {
                                 Navigator.pushNamed(context, "/");
                               },
-                              child: const Text("Out"))),
+                              child: const Text("Volver"))),
                       Spacer(),
                       Padding(padding: EdgeInsets.only(right: 20.0))
                     ],
@@ -172,7 +208,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     TextField(
                       focusNode: myfocus1,
-                      style: const TextStyle(fontSize: 10),
+                      style: const TextStyle(fontSize: 14),
                       controller: _nombreController,
                       decoration: InputDecoration(
                           hintText: '',
@@ -186,8 +222,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       children: <Widget>[Text("Apellidos")],
                     ),
                     TextField(
-                      focusNode: myfocus1,
-                      style: const TextStyle(fontSize: 10),
+                      focusNode: myfocus2,
+                      style: const TextStyle(fontSize: 14),
                       controller: _apellidosController,
                       decoration: InputDecoration(
                           hintText: '',
@@ -201,8 +237,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       children: <Widget>[Text("Contraseña")],
                     ),
                     TextField(
-                      focusNode: myfocus2,
-                      style: const TextStyle(fontSize: 10),
+                      focusNode: myfocus3,
+                      style: const TextStyle(fontSize: 14),
                       controller: _passController,
                       decoration: InputDecoration(
                           hintText: '',
@@ -220,7 +256,11 @@ class _ProfilePageState extends State<ProfilePage> {
                                 foregroundColor: Colors.white,
                                 shape: StadiumBorder()),
                             onPressed: () {
-                              Navigator.pushNamed(context, "/");
+                              Auth().update(
+                                  _nombreController.text,
+                                  _apellidosController.text,
+                                  _passController.text);
+                              Navigator.pushNamed(context, "/activities");
                             },
                             child: const Text("Editar")))
                   ]),
