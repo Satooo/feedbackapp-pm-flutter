@@ -24,8 +24,8 @@ class DefaultFirebaseOptions {
         return android;
       case TargetPlatform.iOS:
         return ios;
-      case TargetPlatform.macOS:
-        return macos;
+      /* case TargetPlatform.macOS:
+        return macos; */
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -73,7 +73,7 @@ class DefaultFirebaseOptions {
     iosBundleId: 'com.example.feedbackapp',
   );
 
-  static const FirebaseOptions macos = FirebaseOptions(
+  /* static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyA-SiTG4MLpxrEeANCZeHj-Tw-78PhvYvE',
     appId: '1:956646036975:ios:b9b802863ea3a2131c921a',
     messagingSenderId: '956646036975',
@@ -83,5 +83,5 @@ class DefaultFirebaseOptions {
     iosClientId:
         '956646036975-7gm2205k621iiqet1uk7o717vulhr262.apps.googleusercontent.com',
     iosBundleId: 'com.example.feedbackapp.RunnerTests',
-  );
+  ); */
 }

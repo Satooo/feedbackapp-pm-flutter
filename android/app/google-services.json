@@ -1,35 +1,42 @@
 {
   "project_info": {
-    "project_number": "956646036975",
-    "firebase_url": "https://alertaperuapp-403c9-default-rtdb.firebaseio.com",
-    "project_id": "alertaperuapp-403c9",
-    "storage_bucket": "alertaperuapp-403c9.appspot.com"
+    "project_number": "733388694064",
+    "firebase_url": "https://feedbackapp-96832-default-rtdb.firebaseio.com",
+    "project_id": "feedbackapp-96832",
+    "storage_bucket": "feedbackapp-96832.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:956646036975:android:dbf74326f6136d9f1c921a",
+        "mobilesdk_app_id": "1:733388694064:android:1b42268c22ea4e240003f5",
         "android_client_info": {
           "package_name": "com.example.feedbackapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "956646036975-4qbrcif572s1sq6g53aujg5vuga2j6a6.apps.googleusercontent.com",
+          "client_id": "733388694064-te543j6j8i921im2e4d0cq1nsohfsal4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCKWgpOrGklRRZykLQFQ5tGQ-HomfnF3ro"
+          "current_key": "AIzaSyCcJxrc5ASUb3vvl9-DIRIifMogo1G39Bw"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "956646036975-4qbrcif572s1sq6g53aujg5vuga2j6a6.apps.googleusercontent.com",
+              "client_id": "733388694064-r5442p7gbpri58l5ocit90om2bes47om.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "733388694064-rsc2nl84k9uu0erlqr7d0ocv1itbkqkh.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.feedbackapp"
+              }
             }
           ]
         }
