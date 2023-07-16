@@ -3,6 +3,7 @@ import 'package:feedbackapp/views/login_view.dart';
 import 'package:feedbackapp/views/profile_view.dart';
 import 'package:feedbackapp/views/rating_view.dart';
 import 'package:feedbackapp/views/register_view.dart';
+import 'package:feedbackapp/views/edit_profile_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -29,7 +30,8 @@ void main() async {
         '/activities': (context) => ActivitiesPage(),
         '/rating': (context) => RatingPage(),
         '/profile': (context) => ProfilePage(),
-        '/register': (context) => RegisterPage()
+        '/register': (context) => RegisterPage(),
+        '/edit_profile': (context) => EditProfilePage()
       },
     ));
 }
