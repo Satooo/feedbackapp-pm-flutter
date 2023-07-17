@@ -1,4 +1,5 @@
 import 'package:feedbackapp/firebase/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -7,6 +8,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  String errorText = '';
   final TextEditingController _userController = TextEditingController();
   final TextEditingController _nombreController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
@@ -26,9 +28,23 @@ class _RegisterPageState extends State<RegisterPage> {
     final nombres = _nombreController.text;
     final apellidos = _apellidosController.text;
 
-    await Auth()
+    try {
+      await Auth()
         .registrarUsuario(usuario, pass, nombres, apellidos)
         .then((_) => Navigator.pushNamed(context, "/"));
+    } catch (e) {
+      if (e is FirebaseAuthException) {
+        if (e.code == 'email-already-in-use') {
+          setState(() {
+            errorText = 'El correo ya está registrado';
+          });
+        }
+      } else {
+        setState(() {
+          errorText = 'Error en registrar el usuario.';
+        });
+      } 
+    }
   }
 
   @override
@@ -166,7 +182,12 @@ class _RegisterPageState extends State<RegisterPage> {
                               return 'Llena este campo.';
                             }
                             return null;
-                          })
+                          }),
+                      const Padding(padding: EdgeInsets.all(5.0)),
+                      Text(
+                        errorText,
+                        style: const TextStyle(color: Colors.red),
+                      ),
                     ]),
                   ),
                 )),

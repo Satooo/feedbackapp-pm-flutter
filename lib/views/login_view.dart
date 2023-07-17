@@ -11,19 +11,27 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  String errorText = '';
   final TextEditingController _userController = TextEditingController();
   final TextEditingController _passController = TextEditingController();
   FocusNode myfocus1 = FocusNode();
   FocusNode myfocus2 = FocusNode();
   final _formKey = GlobalKey<FormState>();
 
-  handleSubmit() async {
+  Future<void> handleSubmit() async {
     if (!_formKey.currentState!.validate()) return;
 
     final usuario = _userController.text;
     final pass = _passController.text;
 
-    await Auth().logearUsuario(usuario, pass);
+    try {
+      await Auth().logearUsuario(usuario, pass);
+    } catch (e) {
+      setState(() {
+        errorText = 'Usuario o contraseña incorrectos';
+      });
+    }
+    
   }
 
   // Future<void> fireFun(user, pass) async {
@@ -136,7 +144,12 @@ class _LoginPageState extends State<LoginPage> {
                               return 'Coloca una contraseña';
                             }
                             return null;
-                          })
+                          }),
+                        const Padding(padding: EdgeInsets.all(5.0)),
+                        Text(
+                          errorText,
+                          style: const TextStyle(color: Colors.red),
+                        ),
                     ]),
                   ),
                 )),
