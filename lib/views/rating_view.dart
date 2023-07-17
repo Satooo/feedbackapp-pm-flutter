@@ -3,7 +3,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:intl/intl.dart';
 import 'dart:developer';
+
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RatingPage extends StatefulWidget {
   @override
@@ -42,6 +45,8 @@ class _RatingPageState extends State<RatingPage> {
   }
 
   Future<void> ingresarCalificacion(proceso) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
     try {
       var uuid = UniqueKey().hashCode.toInt();
       await _firestore
@@ -55,11 +60,20 @@ class _RatingPageState extends State<RatingPage> {
         'amabilidad': puntaje[2],
         'comentario': _comment.text
       });
+
+      var now = new DateTime.now();
+      var formatter = DateFormat('yyyy-MM-dd');
+      String formattedDate = formatter.format(now);
+
+      await prefs.setString(proceso, formattedDate);
+
       Navigator.pushNamed(context, "/");
     } catch (e) {
       print("Error ingresando");
     }
   }
+
+  
 
   void _incrementCounter() {
     setState(() {

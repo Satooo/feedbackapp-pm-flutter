@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ActivitiesPage extends StatefulWidget {
   @override
@@ -11,10 +12,29 @@ class ActivitiesPage extends StatefulWidget {
 
 class _ActivitiesPageState extends State<ActivitiesPage> {
   int _counter = 0;
+  
   TextEditingController _userController = TextEditingController();
   TextEditingController _passController = TextEditingController();
   FocusNode myfocus1 = FocusNode();
   FocusNode myfocus2 = FocusNode();
+  String? fecha1P = '';
+  String? fecha2P = '';
+  String? fecha3P = '';
+  String? fecha4P = '';
+
+  Future<void> obtenerFechas () async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? fecha1 = prefs.getString("Proceso de solicitud");
+    final String? fecha2 = prefs.getString("Proceso de seguro");
+    final String? fecha3 = prefs.getString("Proceso de cancelación");
+    final String? fecha4 = prefs.getString("Proceso de retiro");
+    setState(() {
+        fecha1P = fecha1;
+        fecha2P = fecha2;
+        fecha3P = fecha3;
+        fecha4P = fecha4;
+      });
+  }
 
   void _incrementCounter() {
     setState(() {
@@ -25,6 +45,18 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
       // called again, and so nothing would appear to happen.
       _counter++;
     });
+  }
+
+  Widget fechaWidget (proceso) {
+    if (proceso == "Proceso de solicitud") {
+      return fecha1P==null ? Text('Modificado / $fecha1P') : Text('Modificado / $fecha1P');
+    } else if (proceso == "Proceso de seguro") {
+      return fecha2P==null ? Text('-') : Text('Modificado / $fecha2P');
+    } else if (proceso == "Proceso de cancelación") {
+      return fecha3P==null ? Text('-') : Text('Modificado / $fecha3P');
+    } else {
+      return fecha4P==null ? Text('-') : Text('Modificado / $fecha4P');
+    }
   }
 
   activityCard(activityName, activityId) {
@@ -46,6 +78,14 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
             Padding(padding: EdgeInsets.only(top: 20.0)),
             Row(
               children: [
+                Container(
+                  width: 300,
+                  child: Column(
+                        children: [
+                          fechaWidget(activityName)
+                        ],
+                      )
+                  ),
                 Spacer(),
                 Container(
                     width: 100,
@@ -72,6 +112,7 @@ class _ActivitiesPageState extends State<ActivitiesPage> {
 
   @override
   Widget build(BuildContext context) {
+    obtenerFechas();
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
